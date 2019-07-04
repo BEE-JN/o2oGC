@@ -1,9 +1,9 @@
 <?php
     /**
      * 数据库操作类
-     * @version 1.0
+     * @version 1.1
      * @author GCS
-     * @date 20190225
+     * @date 20190628
      */
     class dataaccess {
 
@@ -25,6 +25,7 @@
  
         /**
          * 数据库连接
+         * @return $retu 返回数据库连接对象
          */
         function db_conn() {
             $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->db);
@@ -33,6 +34,7 @@
             }
             else {
                 $this->conn = $conn;
+                return $conn;
             }
         }
 
@@ -53,10 +55,41 @@
          */
         function db_update($sql) {
             $result = mysqli_query($this->conn, $sql);
-            if(!$result) {
+            if(!$result) { // 更新失败
                 return 0;
+            } else { // 更新成功
+                return 1;
             }
-            else {
+        }
+
+        /**
+         * 插入
+         * @param $sql sql操作语句
+         * @return $ret 1表示插入成功，0表示失败
+         */
+        function db_insert($sql) {
+            $result = mysqli_query($this->conn, $sql);
+            if (!$result) {
+                // 更新失败
+                return 0;
+            } else {
+                // 更新成功
+                return 1;
+            }
+        }
+
+        /**
+         * 删除
+         * @param $sql
+         * @return $ret 1表示删除成功，0表示删除失败
+         */
+        function db_delete($sql) {
+            $result = mysqli_query($this->conn, $sql);
+            if (!$result) {
+                // 删除失败
+                return 0;
+            } else {
+                // 更新成功
                 return 1;
             }
         }
